@@ -112,14 +112,16 @@ def dibujar_boton():
     screen.blit(text, (WIDTH // 2 - 60, HEIGHT - 35))
     return button_rect
 
-# Verificar conexiones
 def verificar_conexiones(matrix, node_positions, conexiones):
     for y, row in enumerate(matrix):
         for x, value in enumerate(row):
-            if value > 0:
-                if contar_conexiones((x, y), conexiones) != value:
+            if value > 0:  # Solo nodos con valor > 0
+                nodo_pos = node_positions[(x, y)]
+                conexiones_actuales = contar_conexiones(nodo_pos, conexiones)
+                if conexiones_actuales != value:
                     return False
     return True
+
 
 def main():
     # Cargar datos desde archivo
