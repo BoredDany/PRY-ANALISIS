@@ -22,6 +22,56 @@ def leer_archivo(filename):
         matrix = [list(map(int, line.strip())) for line in file]
     return dimensions, matrix
 
+def pantalla_bienvenida():
+    while True:
+        screen.fill(WHITE)
+        font_title = pygame.font.Font(None, 64)
+        font_subtitle = pygame.font.Font(None, 36)
+
+        # Título y subtítulo
+        title = font_title.render("¡Bienvenidos!", True, BLACK)
+        subtitle = font_subtitle.render("Selecciona tipo de jugador", True, BLACK)
+
+        screen.blit(title, (WIDTH // 2 - title.get_width() // 2, HEIGHT // 3))
+        screen.blit(subtitle, (WIDTH // 2 - subtitle.get_width() // 2, HEIGHT // 2 - 50))
+
+        # Botones
+        boton_jugador_humano = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
+        boton_jugador_maquina = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 70, 200, 50)
+
+        pygame.draw.rect(screen, GREEN, boton_jugador_humano)
+        pygame.draw.rect(screen, RED, boton_jugador_maquina)
+
+        font_button = pygame.font.Font(None, 36)
+        text_humano = font_button.render("Jugador Humano", True, WHITE)
+        text_maquina = font_button.render("Jugador Máquina", True, WHITE)
+
+        screen.blit(text_humano, (WIDTH // 2 - text_humano.get_width() // 2, HEIGHT // 2 + 10))
+        screen.blit(text_maquina, (WIDTH // 2 - text_maquina.get_width() // 2, HEIGHT // 2 + 80))
+
+        pygame.display.flip()
+
+        # Esperar interacción
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if boton_jugador_humano.collidepoint(event.pos):
+                    return "humano"
+                elif boton_jugador_maquina.collidepoint(event.pos):
+                    return "maquina"
+
+def pantalla_continuara():
+    screen.fill(WHITE)
+    font = pygame.font.Font(None, 60)
+    message = font.render("Continuará...", True, BLACK)
+    screen.blit(message, (WIDTH // 2 - message.get_width() // 2, HEIGHT // 2 - message.get_height() // 2))
+    pygame.display.update()
+    pygame.time.wait(3000)
+    pygame.quit()
+    sys.exit()
+
 # Función para dibujar nodos
 def dibujar_nodos(matrix, node_positions, conexiones):
     for y, row in enumerate(matrix):
@@ -124,6 +174,24 @@ def verificar_conexiones(matrix, node_positions, conexiones):
 
 
 def main():
+
+    tipo_jugador = pantalla_bienvenida()  # Se muestra la pantalla de bienvenida
+
+    if tipo_jugador == "maquina":
+        # Pantalla de "Continuará..." si se selecciona "Jugador Máquina"
+        screen.fill(WHITE)
+        font = pygame.font.Font(None, 64)
+        text = font.render("Continuará...", True, BLACK)
+        screen.blit(text, (WIDTH // 2 - text.get_width() // 2, HEIGHT // 2))
+        pygame.display.flip()
+
+        # Esperar unos segundos antes de salir
+        pygame.time.wait(3000)
+        pygame.quit()
+        sys.exit()
+
+    # Si elige "humano", continúa con el juego normal (aquí sigue tu código original)
+    
     # Cargar datos desde archivo
     dimensions, matrix = leer_archivo("nodos.txt")
     node_positions = generar_posiciones(dimensions, matrix)
@@ -157,7 +225,7 @@ def main():
 
                 # Determinar si se ha hecho clic en algún nodo
                 for node, position in node_positions.items():
-                    distance = ((mouse_pos[0] - position[0]) ** 2 + (mouse_pos[1] - position[1]) ** 2) ** 0.5
+                    distance = ((mouse_pos[0] - position[0]) * 2 + (mouse_pos[1] - position[1]) * 2) ** 0.5
                     if distance < 20:  # Si está dentro del nodo
                         if selected_node is None:
                             selected_node = position
