@@ -15,4 +15,4 @@ def development_screen(screen):
         
         pygame.display.flip()
 
-    pygame.quit()
+    return
