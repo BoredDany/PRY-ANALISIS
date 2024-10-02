@@ -5,7 +5,7 @@ def development_screen(screen):
     running = True
 
     while running:
-        screen.fill((255, 255, 255))  # Fondo blanco
+        screen.fill((255, 255, 255))  
         text_surface = font.render("PRÓXIMO DESARROLLO", True, (0, 0, 0))
         screen.blit(text_surface, (screen.get_width() // 2 - 100, screen.get_height() // 2))
 

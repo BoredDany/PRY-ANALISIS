@@ -5,8 +5,8 @@ WHITE = (255, 255, 255)
 
 def game_screen(screen):
     running = True
-    font = pygame.font.SysFont(None, 30)  # Fuente más pequeña para el botón
-    message_font = pygame.font.SysFont(None, 30)  # Ajustar el tamaño de la fuente del mensaje
+    font = pygame.font.SysFont(None, 30)  
+    message_font = pygame.font.SysFont(None, 30)  
     message = ""
     
     # Cargar datos desde archivo
@@ -22,30 +22,29 @@ def game_screen(screen):
     connections = []
     selected_node = None
 
-    # Definir el rectángulo del botón en la parte superior izquierda con tamaño pequeño
-    button_width, button_height = 100, 40  # Tamaño reducido del botón
-    button_x = 10  # Posición en la esquina superior izquierda (10 píxeles desde el borde izquierdo)
-    button_y = 10  # 10 píxeles desde el borde superior
+    button_width, button_height = 100, 40 
+    button_x = 10  
+    button_y = 10 
     button_rect = pygame.Rect(button_x, button_y, button_width, button_height)
     
     while running:
         try:
-            screen.fill(WHITE)  # Fondo blanco
+            screen.fill(WHITE)  
             
             # Dibujar nodos y conexiones
             dibujar_nodos(screen, matrix, node_positions, connections)
             conectar_nodos(screen, connections)
 
             # Dibujar el botón en la pantalla
-            pygame.draw.rect(screen, (0, 0, 255), button_rect)  # Color del botón
-            button_text = font.render('Verificar', True, (255, 255, 255))  # Texto más pequeño
+            pygame.draw.rect(screen, (0, 0, 255), button_rect) 
+            button_text = font.render('Verificar', True, (255, 255, 255))  
             screen.blit(button_text, (button_rect.x + 10, button_rect.y + 10))
 
             # Dibujar el mensaje al lado del botón
             if message:
                 message_surface = message_font.render(message, True, (0, 0, 0))
-                message_x = button_rect.x + button_width + 20  # 20 píxeles de margen desde el borde derecho del botón
-                message_y = button_rect.y + (button_height - message_surface.get_height()) // 2  # Centrar verticalmente el mensaje respecto al botón
+                message_x = button_rect.x + button_width + 20  
+                message_y = button_rect.y + (button_height - message_surface.get_height()) // 2  
                 screen.blit(message_surface, (message_x, message_y))
 
             for event in pygame.event.get():
