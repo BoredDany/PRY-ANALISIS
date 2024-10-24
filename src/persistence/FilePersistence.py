@@ -1,4 +1,6 @@
-class BoardLoader:
+from model.Node import Node
+
+class FilePersistence:
     def __init__(self, filename):
         self.filename = filename
 
@@ -18,10 +20,10 @@ class BoardLoader:
 
         # Parse matrix and nodes
         for i in range(1, len(lines)):
-            row = list(map(int, lines[i].strip().split(',')))
+            row = list(map(int, lines[i].strip()))
             for j in range(len(row)):
-                matrix[i-1][j] = row[j]
+                matrix[i-1][j] = row[j]  # Use i-1 to correctly index the matrix
                 if row[j] > 0:
-                    nodes.append(Node(i-1, j, row[j]))
+                    nodes.append(Node(i-1, j, row[j]))  # Use i-1 to correctly index the nodes
         
         return matrix, nodes

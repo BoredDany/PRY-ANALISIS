@@ -1,8 +1,8 @@
-from board import Board, Node
-from file_persistence import FilePersistence
-from game import Game
-from player import Player
-
+from model.Board import Board
+from model.Node import Node
+from model.Game import Game
+from model.Player import Player
+from persistence.FilePersistence import FilePersistence
 
 class Main:
     def __init__(self, filename, player_name):
@@ -31,5 +31,5 @@ class Main:
 
 # Example usage
 if __name__ == "__main__":
-    main = Main("nodes.txt", "Alice")
+    main = Main("assets/files/nodes.txt", "Alice")
     main.run()
