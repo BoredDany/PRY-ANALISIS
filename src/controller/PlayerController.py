@@ -1,4 +1,4 @@
-class Controller:
+class PlayerController:
     def __init__(self, game, board):
         self.game = game
         self.board = board
