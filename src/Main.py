@@ -5,7 +5,9 @@ from model.Game import Game
 from model.Player import Player
 from persistence.FilePersistence import FilePersistence
 from controller.PlayerController import PlayerController
-from view.PlayerView import PlayerView  # Importamos la vista del jugador
+from controller.MachineController import MachineController
+from view.PlayerView import PlayerView  
+from view.MachineView import MachineView
 
 
 class Main:
@@ -19,7 +21,7 @@ class Main:
         pygame.init()
         screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("Menu Principal")
-        font = pygame.font.Font(None, 36)
+        font = pygame.font.Font(None, 24)
         clock = pygame.time.Clock()
 
         # Elementos UI
@@ -32,7 +34,7 @@ class Main:
             screen.fill((255, 255, 255))
 
             # Dibujar elementos
-            title = font.render("Juego de Nodos", True, (0, 0, 0))
+            title = font.render("HASHI", True, (0, 0, 0))
             screen.blit(title, (300, 100))
 
             pygame.draw.rect(screen, (200, 200, 200), input_rect)
@@ -44,7 +46,7 @@ class Main:
             screen.blit(play_text, (play_button.x + 50, play_button.y + 10))
 
             pygame.draw.rect(screen, (255, 0, 0), ai_button)
-            ai_text = font.render("Jugar Máquina", True, (255, 255, 255))
+            ai_text = font.render("Juega la Máquina", True, (255, 255, 255))
             screen.blit(ai_text, (ai_button.x + 20, ai_button.y + 10))
 
             for event in pygame.event.get():
@@ -77,15 +79,21 @@ class Main:
         matrix, nodes = persistence.load()
         game = Game(len(matrix), len(matrix[0]), matrix, nodes)
         player = Player(self.player_name)
-        board = Board()  # Board recibe game y player como parámetros
+        board = Board()  
         board.node_positions = board.generar_posiciones(game.x, game.y, game.matrix)
         controller = PlayerController(game, board)
-        player_view = PlayerView(game, board, controller)
+        player_view = PlayerView(game, board, controller, player)
         player_view.run()
 
     def start_ai_view(self):
-        # Aquí podrías implementar una vista para el juego automático.
-        print("Modo automático en desarrollo.")
+        persistence = FilePersistence(self.filename)
+        matrix, nodes = persistence.load()
+        game = Game(len(matrix), len(matrix[0]), matrix, nodes)
+        board = Board()
+        board.node_positions = board.generar_posiciones(game.x, game.y, game.matrix)
+        controller = MachineController(game)
+        machine_view = MachineView(game, board, controller)
+        machine_view.run()
 
 
 if __name__ == "__main__":

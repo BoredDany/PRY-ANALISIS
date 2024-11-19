@@ -9,6 +9,8 @@ class PlayerController:
             return True
         return False
         
+    def won(self):
+        return self.game.won()
         
     def handle_click(self, selected_node, pos):
         node1 = self.board.get_node(selected_node, self.game.matrix)

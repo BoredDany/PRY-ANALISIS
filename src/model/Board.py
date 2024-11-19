@@ -9,8 +9,8 @@ class Board:
         self.node_color = (255, 0, 0)  # Rojo
         self.selected_color = (0, 255, 0)  # Verde
         self.background_color = (255, 255, 255)  # Blanco
-        self.screen_width = 600
-        self.screen_height = 680
+        self.screen_width = 800
+        self.screen_height = 600
         self.margin = 50
         self.offset = 5
         

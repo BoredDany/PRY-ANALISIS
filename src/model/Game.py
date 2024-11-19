@@ -135,6 +135,8 @@ class Game:
         
         return True
     
+    def solve(self):
+        return True
     
     def display(self):
         print("Matrix:")
