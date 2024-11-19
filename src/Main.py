@@ -29,6 +29,7 @@ class Main:
         screen = pygame.display.set_mode((board.screen_width, board.screen_height))
         pygame.display.set_caption("Game Board")
         clock = pygame.time.Clock()
+        
 
         running = True
         needs_redraw = True  

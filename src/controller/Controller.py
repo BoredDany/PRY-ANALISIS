@@ -30,7 +30,7 @@ class Controller:
                 
             # Si es conexion valida
             if self.game.valid_connection(node1, node2):
-                self.game.add_edge(node1, node2)  # Suponiendo que Game tiene el método add_edge
+                self.game.add_edge(node1, node2)  
                 return True  # Redibujar
             
             else:

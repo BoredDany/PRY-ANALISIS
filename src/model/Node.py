@@ -10,6 +10,5 @@ class Node:
     def __hash__(self):
         return hash((self.x, self.y, self.num))  # Permite usar Node como clave en diccionarios o elementos de conjuntos
 
-
     def display(self):
         return f"Node(x={self.x}, y={self.y}, num={self.num})"

@@ -12,6 +12,7 @@ class Board:
         self.screen_width = 600
         self.screen_height = 680
         self.margin = 50
+        self.offset = 5
         
     def draw_nodes(self, screen, matrix):
         for y, row in enumerate(matrix):  # Recorre por filas
@@ -29,36 +30,17 @@ class Board:
                 
     def draw_connections(self, screen, connections):
         radius = self.node_radius
-        for node1, node2 in connections:
-            if connections.count((node1, node2)) + connections.count((node2, node1)) == 2:
-                if node1.x == node2.x:  # Conexión vertical
-                    offset = 5
-                    if node1.y < node2.y:
-                        pygame.draw.line(screen, (255, 0, 0), (node1.x - offset, node1.y + radius), (node2.x - offset, node2.y - radius), 5)
-                        pygame.draw.line(screen, (255, 0, 0), (node1.x + offset, node1.y + radius), (node2.x + offset, node2.y - radius), 5)
-                    else:
-                        pygame.draw.line(screen, (255, 0, 0), (node2.x - offset, node2.y + radius), (node1.x - offset, node1.y - radius), 5)
-                        pygame.draw.line(screen, (255, 0, 0), (node2.x + offset, node2.y + radius), (node1.x + offset, node1.y - radius), 5)
-                elif node1.y == node2.y:  # Conexión horizontal
-                    offset = 5
-                    if node1.x < node2.x:
-                        pygame.draw.line(screen, (255, 0, 0), (node1.x + radius, node1.y - offset), (node2.x - radius, node2.y - offset), 5)
-                        pygame.draw.line(screen, (255, 0, 0), (node1.x + radius, node1.y + offset), (node2.x - radius, node2.y + offset), 5)
-                    else:
-                        pygame.draw.line(screen, (255, 0, 0), (node2.x + radius, node2.y - offset), (node1.x - radius, node1.y - offset), 5)
-                        pygame.draw.line(screen, (255, 0, 0), (node2.x + radius, node2.y + offset), (node1.x - radius, node1.y + offset), 5)
-            else:
-                if node1.x == node2.x:  # Conexión vertical
-                    if node1.y < node2.y:
-                        pygame.draw.line(screen, (255, 0, 0), (node1.x, node1.y + radius), (node2.x, node2.y - radius), 5)
-                    else:
-                        pygame.draw.line(screen, (255, 0, 0), (node2.x, node2.y + radius), (node1.x, node1.y - radius), 5)
-                elif node1.y == node2.y:  # Conexión horizontal
-                    if node1.x < node2.x:
-                        pygame.draw.line(screen, (255, 0, 0), (node1.x + radius, node1.y), (node2.x - radius, node2.y), 5)
-                    else:
-                        pygame.draw.line(screen, (255, 0, 0), (node2.x + radius, node2.y), (node1.x - radius, node1.y), 5)
-                    
+        offset = self.offset
+        
+        # Recorrer todas las conexiones
+            
+            # Si son 2 conexiones entre los nodos
+                # Si es vertical
+                # Si es horizontal
+            
+            # Si es 1 conexión entre los nodos
+                # Si es vertical
+                # Si es horizontal
                     
     def generar_posiciones(self, tam_x, tam_y, matrix):
         node_positions = {}
