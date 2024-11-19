@@ -1,6 +1,8 @@
+from model.AutoSolver import AutoSolver
 class MachineController:
     def __init__(self, game):
         self.game = game
         
     def solve(self):
-        self.game.solve()
+        auto_solver = AutoSolver(self.game)
+        auto_solver.solve()

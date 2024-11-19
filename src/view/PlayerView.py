@@ -58,7 +58,7 @@ class PlayerView:
 
             if needs_redraw:
                 # Dibujar tablero y conexiones
-                screen.fill((255, 255, 255))
+                screen.fill(self.board.background_color)
                 self.board.draw_nodes(screen, self.game.matrix)
                 self.board.draw_connections(screen, self.game.edges, self.game, self.board.node_positions)
 

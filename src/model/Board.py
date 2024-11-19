@@ -7,8 +7,8 @@ class Board:
         self.node_radius = 20
         self.line_color = (0, 0, 0)  # Negro
         self.node_color = (255, 0, 0)  # Rojo
-        self.selected_color = (0, 255, 0)  # Verde
-        self.background_color = (255, 255, 255)  # Blanco
+        self.background_color = (255, 255, 255) # Blanco
+        self.node_text_color = (255, 255, 255) # Blanco
         self.screen_width = 800
         self.screen_height = 600
         self.margin = 50
@@ -23,7 +23,7 @@ class Board:
                     
                     # Mostrar el número del nodo en el centro
                     font = pygame.font.Font(None, 32)
-                    text = font.render(str(value), True, (255, 255, 255))
+                    text = font.render(str(value), True, self.node_text_color)
                     screen.blit(text, (self.node_positions[(y, x)][0] - 10, self.node_positions[(y, x)][1] - 10))
 
 
@@ -62,7 +62,6 @@ class Board:
             else:
                 
                 # Si es vertical
-                
                 if node1_x == node2_x:  
                     if node1_y < node2_y:
                         pygame.draw.line(screen, self.line_color, (node1_x, node1_y + radius), (node2_x, node2_y - radius), 5)
@@ -70,7 +69,6 @@ class Board:
                         pygame.draw.line(screen, self.line_color, (node2_x, node2_y + radius), (node1_x, node1_y - radius), 5)
                 
                 # Si es horizontal
-            
                 elif node1_y == node2_y:  
                     if node1_x < node2_x:
                         pygame.draw.line(screen, self.line_color, (node1_x + radius, node1_y), (node2_x - radius, node2_y), 5)
@@ -83,19 +81,23 @@ class Board:
         x_spacing = 600 // tam_x
         y_spacing = (650 - 50) // tam_y
 
-        for y, row in enumerate(matrix):  # Recorre por filas (y representa la fila)
-            for x, value in enumerate(row):  # Recorre cada columna en la fila
+        # Recorre por filas (y representa la fila)
+        for y, row in enumerate(matrix): 
+            # Recorre cada columna en la fila
+            for x, value in enumerate(row):  
                 if value > 0:
                     # La clave ahora es (fila, columna)
                     node_positions[(y, x)] = (x * x_spacing + x_spacing // 2, y * y_spacing + y_spacing // 2)
 
         return node_positions
 
+
     def connect_nodes(self, screen, node1, node2):
         if node1 in self.node_positions and node2 in self.node_positions:
             pygame.draw.line(screen, self.line_color,
                              self.node_positions[node1],
                              self.node_positions[node2], 2)
+
 
     def get_node(self, mouse_pos, matrix):
         for node, position in self.node_positions.items():

@@ -1,5 +1,4 @@
 import pygame
-import time
 
 class MachineView:
     def __init__(self, game, board, controller):
@@ -25,7 +24,7 @@ class MachineView:
                     self.running = False
 
             # Dibujar fondo blanco
-            screen.fill((255, 255, 255))
+            screen.fill(self.board.background_color)
 
             # Dibujar nodos y conexiones actualizados
             self.board.draw_nodes(screen, self.game.matrix)
