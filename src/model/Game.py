@@ -60,41 +60,45 @@ class Game:
                 return True  # Hay islas
         return False  # No hay islas
     
-    def valid_connection (self, node1, node2):
+    def valid_connection (self, node1, node2, connections):
         if node1.num == 0 or node2.num == 0:
+            print("nodos ceros")
             return False
         
         if node1.__eq__(node2):
+            print("nodos iguales")
             return False
         
         if node1.x != node2.x and node1.y != node2.y:
+            print("nodos en diagonal")
             return False
         
         if self.count_node_connections(node1, node2) == 2:
+            print("nodos con 2 conexiones existentes")
             return False
         
-        for edge in self.edges:
-            n1, n2 = edge
-            if self.do_edges_intersect(node1, node2, n1, n2):
-                return False
+        if self.do_edges_intersect(node1, node2, connections):
+            print("nodos intersectan otra conexion")
+            return False
         
         if self.connection_passes_over_node(node1, node2):
+            print("nodos pasan por encima de otros")
             return False
         
         return True
     
-    def do_edges_intersect(self, n1, n2, m1, m2):
-        # Asegurarse de que las aristas sean rectilíneas (horizontal o vertical)
-        if n1.x == n2.x:  # Vertical
-            if m1.y == m2.y:  # Horizontal
-                # Verificar cruce entre las verticales y horizontales
-                return (min(n1.y, n2.y) <= m1.y <= max(n1.y, n2.y) and
-                        min(m1.x, m2.x) <= n1.x <= max(m1.x, m2.x))
-        elif n1.y == n2.y:  # Horizontal
-            if m1.x == m2.x:  # Vertical
-                # Verificar cruce entre las horizontales y verticales
-                return (min(n1.x, n2.x) <= m1.x <= max(n1.x, n2.x) and
-                        min(m1.y, m2.y) <= n1.y <= max(m1.y, m2.y))
+    def do_edges_intersect(self, node1, node2, connections):
+        
+        for n1, n2 in connections:
+            if (node1.x == node2.x == n1.x == n2.x or
+                node1.y == node2.y == n1.y == n2.y):
+                continue
+            if (min(node1.x, node2.x) < max(n1.x, n2.x) and
+                max(node1.x, node2.x) > min(n1.x, n2.x) and
+                min(node1.y, node2.y) < max(n1.y, n2.y) and
+                max(node1.y, node2.y) > min(n1.y, n2.y)):
+                return True
+            
         return False
     
     
@@ -123,7 +127,7 @@ class Game:
     
     def won (self):
         for node in self.vertices:
-            if node.num != count_connections(node):
+            if node.num != self.count_connections(node):
                 return False
             
         if self.island():

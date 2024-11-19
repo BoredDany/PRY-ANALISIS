@@ -19,7 +19,7 @@ class Board:
             for x, value in enumerate(row):  # Recorre cada columna en la fila
                 if value > 0:
                     # Usa (fila, columna) como clave para obtener la posición del nodo
-                    pygame.draw.circle(screen, (0, 0, 0), self.node_positions[(y, x)], self.node_radius)
+                    pygame.draw.circle(screen, self.node_color, self.node_positions[(y, x)], self.node_radius)
                     
                     # Mostrar el número del nodo en el centro
                     font = pygame.font.Font(None, 32)
@@ -28,13 +28,40 @@ class Board:
 
 
                 
-    def draw_connections(self, screen, connections):
+    def draw_connections(self, screen, connections, game):
         radius = self.node_radius
         offset = self.offset
         
+        for node1, node2 in connections:
+            # Obtener posiciones en pantalla de los nodos
+            pos1 = self.node_positions[(node1.x, node1.y)]
+            pos2 = self.node_positions[(node2.x, node2.y)]
+            
+            # Contar conexiones entre los nodos
+            num_connections = game.count_node_connections(node1, node2)
+
+            # Dibujar cada conexión desplazada según el número
+            for i in range(num_connections):
+                displacement = 10 * (i - (num_connections - 1) / 2)  # Centrar desplazamiento
+                if node1.x == node2.x:  # Conexión vertical
+                    pygame.draw.line(
+                        screen, self.line_color, 
+                        (pos1[0] + displacement, pos1[1]), 
+                        (pos2[0] + displacement, pos2[1]), 
+                        2
+                    )
+                elif node1.y == node2.y:  # Conexión horizontal
+                    pygame.draw.line(
+                        screen, self.line_color, 
+                        (pos1[0], pos1[1] + displacement), 
+                        (pos2[0], pos2[1] + displacement), 
+                        2
+                    )
+            
         # Recorrer todas las conexiones
             
             # Si son 2 conexiones entre los nodos
+            
                 # Si es vertical
                 # Si es horizontal
             

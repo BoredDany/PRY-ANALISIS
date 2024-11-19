@@ -54,6 +54,7 @@ class Main:
                 game.display()
                 screen.fill((255, 255, 255)) 
                 board.draw_nodes(screen, game.matrix)
+                board.draw_connections(screen, game.edges, game)
                 pygame.display.update()
                 needs_redraw = False
             
