@@ -3,5 +3,5 @@ class Player:
         self.name = name
         self.score = 0
 
-    def __str__(self):
+    def display(self):
         return f"Player {self.name} with score {self.score}"

@@ -17,19 +17,18 @@ class Main:
         matrix, nodes = persistence.load()
         
         # Create the board object
-        board = Board(len(matrix), len(matrix[0]), matrix, nodes)
+        board = Game(len(matrix), len(matrix[0]), matrix, nodes)
         
         # Create the player object
         player = Player(self.player_name)
         
         # Create the game object
-        game = Game(board, player)
+        game = Board(board, player)
         
         # Display the initial board
         game.display_board()
         
 
-# Example usage
 if __name__ == "__main__":
-    main = Main("assets/files/nodes.txt", "Alice")
+    main = Main("C:/Users/danym/OneDrive/Documentos/PRY-ANALISIS/assets/files/nodes.txt", "Alice")
     main.run()
