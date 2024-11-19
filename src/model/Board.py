@@ -28,46 +28,55 @@ class Board:
 
 
                 
-    def draw_connections(self, screen, connections, game):
+    def draw_connections(self, screen, connections, game, positions):
         radius = self.node_radius
         offset = self.offset
-        
-        for node1, node2 in connections:
-            # Obtener posiciones en pantalla de los nodos
-            pos1 = self.node_positions[(node1.x, node1.y)]
-            pos2 = self.node_positions[(node2.x, node2.y)]
-            
-            # Contar conexiones entre los nodos
-            num_connections = game.count_node_connections(node1, node2)
-
-            # Dibujar cada conexión desplazada según el número
-            for i in range(num_connections):
-                displacement = 10 * (i - (num_connections - 1) / 2)  # Centrar desplazamiento
-                if node1.x == node2.x:  # Conexión vertical
-                    pygame.draw.line(
-                        screen, self.line_color, 
-                        (pos1[0] + displacement, pos1[1]), 
-                        (pos2[0] + displacement, pos2[1]), 
-                        2
-                    )
-                elif node1.y == node2.y:  # Conexión horizontal
-                    pygame.draw.line(
-                        screen, self.line_color, 
-                        (pos1[0], pos1[1] + displacement), 
-                        (pos2[0], pos2[1] + displacement), 
-                        2
-                    )
             
         # Recorrer todas las conexiones
+        for node1, node2 in connections:
+            
+            node1_x, node1_y = positions[node1.x, node1.y]
+            node2_x, node2_y = positions[node2.x, node2.y]
             
             # Si son 2 conexiones entre los nodos
+            if game.count_node_connections(node1, node2) == 2:
             
                 # Si es vertical
+                if node1_x == node2_x:
+                    if node1_y < node2_y:
+                        pygame.draw.line(screen, self.line_color, (node1_x - offset, node1_y + radius), (node2_x - offset, node2_y - radius), 5)
+                        pygame.draw.line(screen, self.line_color, (node1_x + offset, node1_y + radius), (node2_x + offset, node2_y - radius), 5)
+                    else:
+                        pygame.draw.line(screen, self.line_color, (node2_x - offset, node2_y + radius), (node1_x - offset, node1_y - radius), 5)
+                        pygame.draw.line(screen, self.line_color, (node2_x + offset, node2_y + radius), (node1_x + offset, node1_y - radius), 5)
+                
+                # Si es horizontal
+                elif node1_y == node2_y:
+                    if node1_x < node2_x:
+                        pygame.draw.line(screen, self.line_color, (node1_x + radius, node1_y - offset), (node2_x - radius, node2_y - offset), 5)
+                        pygame.draw.line(screen, self.line_color, (node1_x + radius, node1_y + offset), (node2_x - radius, node2_y + offset), 5)
+                    else:
+                        pygame.draw.line(screen, self.line_color, (node2_x + radius, node2_y - offset), (node1_x - radius, node1_y - offset), 5)
+                        pygame.draw.line(screen, self.line_color, (node2_x + radius, node2_y + offset), (node1_x - radius, node1_y + offset), 5)
+                    
+            else:
+                
+                # Si es vertical
+                
+                if node1_x == node2_x:  
+                    if node1_y < node2_y:
+                        pygame.draw.line(screen, self.line_color, (node1_x, node1_y + radius), (node2_x, node2_y - radius), 5)
+                    else:
+                        pygame.draw.line(screen, self.line_color, (node2_x, node2_y + radius), (node1_x, node1_y - radius), 5)
+                
                 # Si es horizontal
             
-            # Si es 1 conexión entre los nodos
-                # Si es vertical
-                # Si es horizontal
+                elif node1_y == node2_y:  
+                    if node1_x < node2_x:
+                        pygame.draw.line(screen, self.line_color, (node1_x + radius, node1_y), (node2_x - radius, node2_y), 5)
+                    else:
+                        pygame.draw.line(screen, self.line_color, (node2_x + radius, node2_y), (node1_x - radius, node1_y), 5)
+                        
                     
     def generar_posiciones(self, tam_x, tam_y, matrix):
         node_positions = {}
