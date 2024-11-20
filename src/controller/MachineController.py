@@ -5,4 +5,5 @@ class MachineController:
         
     def solve(self):
         auto_solver = AutoSolver(self.game)
-        auto_solver.solve()
+        res = auto_solver.solve()
+        print(res)

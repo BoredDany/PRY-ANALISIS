@@ -6,6 +6,9 @@ class Game:
         self.vertices = vertices
         self.edges = []
         
+    def set_edges(self, edges):
+        self.edges = edges
+        
     def add_edge(self, node1, node2):
         self.edges.append([node1, node2])
     
@@ -62,27 +65,27 @@ class Game:
     
     def valid_connection (self, node1, node2, connections):
         if node1.num == 0 or node2.num == 0:
-            print("nodos ceros")
+            #print("nodos ceros")
             return False
         
         if node1.__eq__(node2):
-            print("nodos iguales")
+            #print("nodos iguales")
             return False
         
         if node1.x != node2.x and node1.y != node2.y:
-            print("nodos en diagonal")
+            #print("nodos en diagonal")
             return False
         
         if self.count_node_connections(node1, node2) == 2:
-            print("nodos con 2 conexiones existentes")
+            #print("nodos con 2 conexiones existentes")
             return False
         
         if self.do_edges_intersect(node1, node2, connections):
-            print("nodos intersectan otra conexion")
+            #print("nodos intersectan otra conexion")
             return False
         
         if self.connection_passes_over_node(node1, node2):
-            print("nodos pasan por encima de otros")
+            #print("nodos pasan por encima de otros")
             return False
         
         return True
