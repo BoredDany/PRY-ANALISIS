@@ -14,7 +14,6 @@ class AutoSolver:
         possible_edges = self.generate_valid_connections()
 
         while nodes_to_connect:
-            # Iterar sobre la lista buscando el nodo con conexiones faltantes igual a vecinos disponibles
             for node in nodes_to_connect:
                 connections_needed = node.num - game.count_connections(node)
                 valid_neighbors = self.get_node_valid_connections(node, possible_edges)
@@ -44,10 +43,8 @@ class AutoSolver:
                     # Eliminar el nodo resuelto de la lista
                     nodes_to_connect.remove(node)
 
-                    # No es necesario reordenar la lista completa; se asume que el nodo procesado ya no afecta el orden
                     break
             else:
-                # Si ningún nodo puede resolverse, terminar el bucle
                 print("No se encontraron más soluciones posibles.")
                 break
 
@@ -66,9 +63,7 @@ class AutoSolver:
         for node1, node2 in valid_neighbors:
             # Ordenar cada par de nodos para asegurar que no importe el orden
             connection = tuple(sorted([node1, node2], key=lambda node: (node.x, node.y)))
-            unique_connections.add(connection)  # Usar un set para eliminar duplicados
-
-        # Convertir de nuevo el set a una lista
+            unique_connections.add(connection)  
         return [tuple(connection) for connection in unique_connections]
 
         
